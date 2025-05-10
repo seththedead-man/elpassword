@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SYSTEM PASSWORD</title>
+    <style>
+        body {
+            background-color: #001100;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+            text-shadow: 0 0 5px #00AA00;
+            overflow: hidden;
+        }
+        
+        .crt {
+            background-color: #001400;
+            border: 12px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 30px #00AA00;
+            padding: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .crt::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                rgba(0, 255, 0, 0.03) 50%,
+                rgba(0, 0, 0, 0.2) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        
+        h1 {
+            color: #00FF00;
+            border-bottom: 1px solid #00AA00;
+            padding-bottom: 10px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+        
+        .password {
+            font-size: 24px;
+            margin: 40px 0;
+            letter-spacing: 3px;
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 30, 0, 0.3) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="crt">
+        <div class="scanlines"></div>
+        <h1>SYSTEM PASSWORD ACCESS</h1>
+        <div class="password">> THE PASSWORD IS _</div>
+    </div>
+    
+    <script>
+        // Add subtle flicker effect
+        setInterval(() => {
+            const flicker = Math.random() * 0.2 + 0.9;
+            document.querySelector('.crt').style.opacity = flicker;
+        }, 100);
+        
+        // Simulate typing effect
+        const passwordElement = document.querySelector('.password');
+        const fullText = "> THE PASSWORD IS [Flower-Moon]";
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < fullText.length) {
+                passwordElement.innerHTML = fullText.substring(0, i+1) + (i % 2 ? '_' : '');
+                i++;
+                setTimeout(typeWriter, Math.random() * 100 + 50);
+            } else {
+                // Keep blinking cursor
+                setInterval(() => {
+                    passwordElement.innerHTML = fullText + (passwordElement.innerHTML.endsWith('_') ? '' : '_');
+                }, 500);
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
